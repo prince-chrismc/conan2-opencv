@@ -1,5 +1,5 @@
 include(default)
 
 [conf]
-opencv/*:tools.build:jobs=18
-ffmpeg/*:tools.build:jobs=36
+opencv/*:user.incredibuild:jobs=18
+opencv/*:tools.build:jobs=0 # Disable conan's default behavoir

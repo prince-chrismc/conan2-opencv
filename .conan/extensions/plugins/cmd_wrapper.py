@@ -1,7 +1,7 @@
 from conan.api.output import ConanOutput
 
 def cmd_wrapper(cmd, conanfile):
-    build_jobs = conanfile.conf.get("tools.build:jobs", default=False, check_type=int)
+    build_jobs = conanfile.conf.get("user.incredibuild:jobs", default=False, check_type=int)
     if not build_jobs:
         return cmd
 
@@ -13,10 +13,6 @@ def cmd_wrapper(cmd, conanfile):
         # https://stackoverflow.com/a/58322616
         new_cmd = cmd.replace('"','\\"')
         new_cmd = "echo %TIME% & " + f'BuildConsole /command="{new_cmd} -j {build_jobs}"' + " & cmd /v:on /c echo !TIME!"
-        return new_cmd
-    elif cmd.startswith("make -j") and str(conanfile.ref.name) == "ffmpeg":
-        out.info(f'BuildConsole /command="{cmd}"')
-        new_cmd = "echo %TIME% & " + f'BuildConsole /command="{cmd} -C {conanfile.build_folder}"' + " & cmd /v:on /c echo !TIME!"
         return new_cmd
         
     return cmd
